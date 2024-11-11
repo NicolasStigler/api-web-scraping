@@ -23,6 +23,14 @@ functions:
           cors: true
           integration: lambda
 
+plugins:
+  - serverless-python-requirements
+
+custom:
+  pythonRequirements:
+    dockerizePip: true
+    layer: true
+
 resources:
   Resources:
     TablaSismos:
