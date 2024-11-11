@@ -11,16 +11,11 @@ provider:
     role: arn:aws:iam::943073974505:role/LabRole
 
 functions:
-  scrape_table:
-    handler: scrap_table.lambda_handler  # Asegúrarse de que el nombre del archivo y la función coincidan
-    events:
-      - http:
-          path: /scrape/table
-          method: get
-          cors: true
-          integration: lambda
   scrape_sismos:
     handler: scrap_sismos.lambda_handler  # Asegúrarse de que el nombre del archivo y la función coincidan
+    package:
+      include:
+        - ./**  # Incluir todo el contenido del directorio
     events:
       - http:
           path: /scrape/sismos
@@ -30,17 +25,6 @@ functions:
 
 resources:
   Resources:
-    TablaWebScrapping:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: TablaWebScrapping
-        AttributeDefinitions:
-          - AttributeName: id
-            AttributeType: S
-        KeySchema:
-          - AttributeName: id
-            KeyType: HASH
-        BillingMode: PAY_PER_REQUEST
     TablaSismos:
       Type: AWS::DynamoDB::Table
       Properties:
